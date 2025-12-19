@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import API_URL from '../../config';
 
 const Hero = () => {
     const [heroData, setHeroData] = useState(null);
@@ -9,7 +10,7 @@ const Hero = () => {
     useEffect(() => {
         const fetchHero = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/hero');
+                const res = await axios.get(`${API_URL}/api/hero`);
                 setHeroData(res.data);
             } catch (error) {
                 console.error("Error fetching hero data:", error);

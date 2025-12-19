@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import API_URL from '../../config';
+
 
 const Education = () => {
     const [educationData, setEducationData] = useState([]);
@@ -8,7 +10,7 @@ const Education = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/education');
+                const res = await axios.get(`${API_URL}/api/education`);
                 setEducationData(res.data);
             } catch (error) {
                 console.error("Error fetching education data:", error);

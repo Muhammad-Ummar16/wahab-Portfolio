@@ -1,6 +1,8 @@
 import toast from 'react-hot-toast';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import API_URL from '../../config';
+
 
 import { Save, Upload } from 'lucide-react';
 const HeroManager = () => {
@@ -21,7 +23,7 @@ const HeroManager = () => {
     useEffect(() => {
         const fetchHero = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/hero');
+                const res = await axios.get(`${API_URL}/api/hero`);
                 setFormData(res.data);
             } catch (error) {
                 console.error("Error fetching hero data:", error);
@@ -45,7 +47,7 @@ const HeroManager = () => {
         formDataUpload.append('oldUrl', oldUrl || '');
 
         try {
-            const res = await axios.post('http://localhost:5000/api/upload', formDataUpload, {
+            const res = await axios.post(`${API_URL}/api/upload`, formDataUpload, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             setFormData(prev => ({ ...prev, [type === 'image' ? 'image' : 'cvUrl']: res.data.url }));
@@ -62,7 +64,7 @@ const HeroManager = () => {
         e.preventDefault();
         setSaving(true);
         try {
-            await axios.put('http://localhost:5000/api/hero', formData);
+            await axios.put(`${API_URL}/api/hero`, formData);
             toast.success('Hero section updated!');
         } catch (error) {
             console.error("Error updating hero:", error);

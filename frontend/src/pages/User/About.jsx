@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import API_URL from '../../config';
+
 
 const About = () => {
     const [aboutData, setAboutData] = useState(null);
@@ -8,7 +10,7 @@ const About = () => {
     useEffect(() => {
         const fetchAbout = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/about');
+                const res = await axios.get(`${API_URL}/api/about`);
                 setAboutData(res.data);
             } catch (error) {
                 console.error("Error fetching about data:", error);

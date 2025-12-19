@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Save } from 'lucide-react';
+import API_URL from '../../config';
+
 const AdminDashboard = () => {
     const [stats, setStats] = useState({
         education: 0,
@@ -12,9 +14,9 @@ const AdminDashboard = () => {
         const fetchStats = async () => {
             try {
                 const [edu, skills, certs] = await Promise.all([
-                    axios.get('http://localhost:5000/api/education'),
-                    axios.get('http://localhost:5000/api/skills'),
-                    axios.get('http://localhost:5000/api/certifications')
+                    axios.get(`${API_URL}/api/education`),
+                    axios.get(`${API_URL}/api/skills`),
+                    axios.get(`${API_URL}/api/certifications`)
                 ]);
                 setStats({
                     education: edu.data.length,

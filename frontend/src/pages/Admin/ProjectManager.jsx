@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Plus, Trash2, Edit2, X, Check, ExternalLink } from 'lucide-react';
 import toast from 'react-hot-toast';
+import API_URL from '../../config';
 
 const ProjectManager = () => {
     const [projects, setProjects] = useState([]);
@@ -10,7 +11,7 @@ const ProjectManager = () => {
 
     const fetchProjects = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/projects');
+            const res = await axios.get(`${API_URL}/api/projects`);
             setProjects(res.data);
         } catch (error) {
             console.error("Error fetching projects:", error);
@@ -25,10 +26,10 @@ const ProjectManager = () => {
         e.preventDefault();
         try {
             if (isEditing) {
-                await axios.put(`http://localhost:5000/api/projects/${isEditing}`, formData);
+                await axios.put(`${API_URL}/api/projects/${isEditing}`, formData);
                 toast.success('Project updated');
             } else {
-                await axios.post('http://localhost:5000/api/projects', formData);
+                await axios.post(`${API_URL}/api/projects`, formData);
                 toast.success('New project added');
             }
             setIsEditing(null);
@@ -48,7 +49,7 @@ const ProjectManager = () => {
     const handleDelete = async (id) => {
         if (window.confirm("Delete this project?")) {
             try {
-                await axios.delete(`http://localhost:5000/api/projects/${id}`);
+                await axios.delete(`${API_URL}/api/projects/${id}`);
                 fetchProjects();
                 toast.success('Project deleted');
             } catch (error) {

@@ -2,6 +2,8 @@ import toast from 'react-hot-toast';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Save } from 'lucide-react';
+import API_URL from '../../config';
+
 const AboutManager = () => {
     const [formData, setFormData] = useState({
         mission: '',
@@ -16,7 +18,7 @@ const AboutManager = () => {
     useEffect(() => {
         const fetchAbout = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/about');
+                const res = await axios.get(`${API_URL}/api/about`);
                 setFormData(res.data);
             } catch (error) {
                 console.error("Error fetching about data:", error);
@@ -32,7 +34,7 @@ const AboutManager = () => {
         e.preventDefault();
         setSaving(true);
         try {
-            await axios.put('http://localhost:5000/api/about', formData);
+            await axios.put(`${API_URL}/api/about`, formData);
             toast.success('About section updated!');
         } catch (error) {
             console.error("Error updating about:", error);

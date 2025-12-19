@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Plus, Trash2, Edit2, X, Check } from 'lucide-react';
 import toast from 'react-hot-toast';
+import API_URL from '../../config';
+
 
 const EducationManager = () => {
     const [items, setItems] = useState([]);
@@ -9,7 +11,7 @@ const EducationManager = () => {
     const [formData, setFormData] = useState({ year: '', degree: '', institution: '', description: '', stats: '' });
 
     const fetchItems = async () => {
-        const res = await axios.get('http://localhost:5000/api/education');
+        const res = await axios.get(`${API_URL}/api/education`);
         setItems(res.data);
     };
 
@@ -21,10 +23,10 @@ const EducationManager = () => {
         e.preventDefault();
         try {
             if (isEditing) {
-                await axios.put(`http://localhost:5000/api/education/${isEditing}`, formData);
+                await axios.put(`${API_URL}/api/education/${isEditing}`, formData);
                 toast.success('Education item updated');
             } else {
-                await axios.post('http://localhost:5000/api/education', formData);
+                await axios.post(`${API_URL}/api/education`, formData);
                 toast.success('New education item added');
             }
             setIsEditing(null);
@@ -44,7 +46,7 @@ const EducationManager = () => {
     const handleDelete = async (id) => {
         if (window.confirm("Are you sure you want to delete this item?")) {
             try {
-                await axios.delete(`http://localhost:5000/api/education/${id}`);
+                await axios.delete(`${API_URL}/api/education/${id}`);
                 fetchItems();
                 toast.success('Item deleted successfully');
             } catch (error) {

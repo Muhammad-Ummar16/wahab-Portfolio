@@ -3,9 +3,11 @@ const cors = require('cors');
 const fs = require('fs-extra');
 const path = require('path');
 const multer = require('multer');
+require('dotenv').config();
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
+const BASE_URL = process.env.BASE_URL || `http://localhost:${PORT}`;
 
 app.use(cors());
 app.use(express.json());
@@ -53,7 +55,7 @@ app.post('/api/upload', upload.single('file'), async (req, res) => {
         }
     }
 
-    const fileUrl = `http://localhost:5000/uploads/${req.file.filename}`;
+    const fileUrl = `${BASE_URL}/uploads/${req.file.filename}`;
     res.json({ url: fileUrl });
 });
 
@@ -157,5 +159,5 @@ resources.forEach(resource => {
 });
 
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Server running on ${BASE_URL}`);
 });

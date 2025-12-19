@@ -1,6 +1,8 @@
 import toast from 'react-hot-toast';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import API_URL from '../../config';
+
 import { Mail, Phone, Linkedin, Save, MessageCircle, MapPin } from 'lucide-react';
 const ContactManager = () => {
     const [formData, setFormData] = useState({
@@ -16,7 +18,7 @@ const ContactManager = () => {
     useEffect(() => {
         const fetchContact = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/contact');
+                const res = await axios.get(`${API_URL}/api/contact`);
                 setFormData(res.data);
             } catch (error) {
                 console.error("Error fetching contact data:", error);
@@ -32,7 +34,7 @@ const ContactManager = () => {
         e.preventDefault();
         setSaving(true);
         try {
-            await axios.put('http://localhost:5000/api/contact', formData);
+            await axios.put(`${API_URL}/api/contact`, formData);
             toast.success('Contact info updated!');
         } catch (error) {
             console.error("Error updating contact:", error);

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Plus, Trash2, Edit2, X, Check, Upload, Award } from 'lucide-react';
 import toast from 'react-hot-toast';
+import API_URL from '../../config';
 
 const CertificatesManager = () => {
     const [items, setItems] = useState([]);
@@ -18,7 +19,7 @@ const CertificatesManager = () => {
 
     const fetchItems = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/certifications');
+            const res = await axios.get(`${API_URL}/api/certifications`);
             setItems(res.data);
         } catch (error) {
             console.error("Error fetching certifications:", error);
@@ -40,7 +41,7 @@ const CertificatesManager = () => {
         formDataUpload.append('oldUrl', formData.image || '');
 
         try {
-            const res = await axios.post('http://localhost:5000/api/upload', formDataUpload, {
+            const res = await axios.post(`${API_URL}/api/upload`, formDataUpload, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             setFormData(prev => ({ ...prev, image: res.data.url }));
@@ -57,10 +58,10 @@ const CertificatesManager = () => {
         e.preventDefault();
         try {
             if (isEditing) {
-                await axios.put(`http://localhost:5000/api/certifications/${isEditing}`, formData);
+                await axios.put(`${API_URL}/api/certifications/${isEditing}`, formData);
                 toast.success('Certification updated');
             } else {
-                await axios.post('http://localhost:5000/api/certifications', formData);
+                await axios.post(`${API_URL}/api/certifications`, formData);
                 toast.success('New certification added');
             }
             setIsEditing(null);
@@ -87,7 +88,7 @@ const CertificatesManager = () => {
     const handleDelete = async (id) => {
         if (window.confirm("Are you sure you want to delete this certification?")) {
             try {
-                await axios.delete(`http://localhost:5000/api/certifications/${id}`);
+                await axios.delete(`${API_URL}/api/certifications/${id}`);
                 fetchItems();
                 toast.success('Deleted successfully');
             } catch (error) {

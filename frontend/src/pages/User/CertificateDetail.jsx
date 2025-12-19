@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
 import { Award, Calendar, Building, CheckCircle2, ArrowLeft, ExternalLink } from 'lucide-react';
+import API_URL from '../../config';
+
 
 const CertificateDetail = () => {
     const { id } = useParams();
@@ -11,7 +13,7 @@ const CertificateDetail = () => {
     useEffect(() => {
         const fetchCert = async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/api/certifications`);
+                const res = await axios.get(`${API_URL}/api/certifications`);
                 // Since our toy backend returns an array for certifications, we find the one by ID
                 const found = res.data.find(c => c.id.toString() === id);
                 setCert(found);

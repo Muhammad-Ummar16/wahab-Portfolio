@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ExternalLink } from 'lucide-react';
+import API_URL from '../../config';
 
 const Projects = () => {
     const [projects, setProjects] = useState([]);
@@ -9,7 +10,7 @@ const Projects = () => {
     useEffect(() => {
         const fetchProjects = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/projects');
+                const res = await axios.get(`${API_URL}/api/projects`);
                 setProjects(res.data);
             } catch (error) {
                 console.error("Error fetching projects:", error);

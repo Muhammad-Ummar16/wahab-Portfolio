@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Plus, Trash2, Edit2, X, Check, Layers } from 'lucide-react';
 import toast from 'react-hot-toast';
+import API_URL from '../../config';
 
 const SkillsManager = () => {
     const [categories, setCategories] = useState([]);
@@ -11,7 +12,7 @@ const SkillsManager = () => {
 
     const fetchCategories = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/skills');
+            const res = await axios.get(`${API_URL}/api/skills`);
             setCategories(res.data);
         } catch (error) {
             console.error("Error fetching skills:", error);
@@ -26,10 +27,10 @@ const SkillsManager = () => {
         e.preventDefault();
         try {
             if (isEditing) {
-                await axios.put(`http://localhost:5000/api/skills/${isEditing}`, formData);
+                await axios.put(`${API_URL}/api/skills/${isEditing}`, formData);
                 toast.success('Skill category updated');
             } else {
-                await axios.post('http://localhost:5000/api/skills', formData);
+                await axios.post(`${API_URL}/api/skills`, formData);
                 toast.success('New category created');
             }
             setIsEditing(null);
@@ -49,7 +50,7 @@ const SkillsManager = () => {
     const handleDeleteCategory = async (id) => {
         if (window.confirm("Delete this entire category?")) {
             try {
-                await axios.delete(`http://localhost:5000/api/skills/${id}`);
+                await axios.delete(`${API_URL}/api/skills/${id}`);
                 fetchCategories();
                 toast.success('Category removed');
             } catch (error) {

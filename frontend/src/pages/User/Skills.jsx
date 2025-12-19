@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Share2, PenTool, BarChart3 } from 'lucide-react';
+import API_URL from '../../config';
 
 const Skills = () => {
     const [skillCategories, setSkillCategories] = useState([]);
@@ -17,7 +18,7 @@ const Skills = () => {
     useEffect(() => {
         const fetchSkills = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/skills');
+                const res = await axios.get(`${API_URL}/api/skills`);
                 setSkillCategories(res.data);
             } catch (error) {
                 console.error("Error fetching skills:", error);

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Award, ArrowRight } from 'lucide-react';
+import API_URL from '../../config';
+
 
 const Certificates = () => {
     const [certificates, setCertificates] = useState([]);
@@ -10,7 +12,7 @@ const Certificates = () => {
     useEffect(() => {
         const fetchCerts = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/certifications');
+                const res = await axios.get(`${API_URL}/api/certifications`);
                 setCertificates(res.data);
             } catch (error) {
                 console.error("Error fetching certificates:", error);
