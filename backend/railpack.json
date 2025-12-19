@@ -1,5 +1,9 @@
 {
-    "build": "npm install",
-    "start": "npm start",
-    "language": "node"
+    "language": "node",
+    "build": {
+        "command": "npm install"
+    },
+    "start": {
+        "command": "npm start"
+    }
 }
